@@ -48,4 +48,21 @@ public class ProductEntity {
                 ", value=" + value +
                 '}';
     }
+
+    public void atualizar(UpdateProductDto updateProductDto, ProductCategoryEntity category) {
+        this.category = category;
+
+        if (updateProductDto.description()!=null){
+            this.description = updateProductDto.description();
+        }
+
+        if (updateProductDto.name()!=null){
+            this.description = updateProductDto.name();
+        }
+
+        if (updateProductDto.value() !=null){
+            this.value = updateProductDto.value();
+        }
+
+    }
 }

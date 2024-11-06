@@ -33,7 +33,7 @@ public class CustomerProductsController {
 
         System.out.println(searchResult);
 
-        return ResponseEntity.ok(searchResult.stream().map(ProductDto::new));
+        return ResponseEntity.ok(searchResult);
     }
 
 
@@ -43,9 +43,12 @@ public class CustomerProductsController {
         return ResponseEntity.ok(new ProductDto(repository.getReferenceById(id)));
     }
 
-    @GetMapping("/category/{id}")
-    public ResponseEntity listByCategory(Pageable pageable) {
-        return ResponseEntity.ok().build();
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity listByCategory(@PathVariable Long categoryId, Pageable pageable) {
+        //var category = productCategoryRepository.getReferenceById(id);
+        var result = repository.searchByCategoryId(categoryId);
+
+        return ResponseEntity.ok(result.stream().map(ProductDto::new));
     }
 
     @GetMapping("/categories")
