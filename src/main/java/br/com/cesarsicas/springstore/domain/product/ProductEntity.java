@@ -2,11 +2,13 @@ package br.com.cesarsicas.springstore.domain.product;
 
 
 import br.com.cesarsicas.springstore.domain.product_category.ProductCategoryEntity;
+import br.com.cesarsicas.springstore.domain.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.apache.catalina.User;
 
 import java.math.BigDecimal;
 
@@ -28,14 +30,19 @@ public class ProductEntity {
 
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity user;
+
+    @ManyToOne
     @JoinColumn(name = "category_id")
     private ProductCategoryEntity category;
 
-    public ProductEntity(ProductDto productDto, ProductCategoryEntity category) {
+    public ProductEntity(ProductDto productDto, ProductCategoryEntity category, UserEntity user) {
         this.name = productDto.name();
         this.description = productDto.description();
         this.value = productDto.value();
         this.category = category;
+        this.user = user;
     }
 
 
