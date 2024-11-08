@@ -30,7 +30,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
         if (tokenJWT != null) {
             var subject = tokenService.getSubject(tokenJWT);
-            var user = repository.findByLogin(subject);
+            var user = repository.findByLoginAndIsActiveTrue(subject);
 
             System.out.println("User encontrado "+user );
 

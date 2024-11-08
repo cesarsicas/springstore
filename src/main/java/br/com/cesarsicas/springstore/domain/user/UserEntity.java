@@ -2,16 +2,12 @@ package br.com.cesarsicas.springstore.domain.user;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
-import java.util.List;
 
 @Table(name = "users")
 @Entity(name = "User")
@@ -19,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
-public class User implements UserDetails {
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +27,16 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @Setter
+    boolean isActive;
+
+    public UserEntity(UserDto userDto) {
+        this.login = userDto.email();
+        this.role = userDto.role();
+        this.password = new BCryptPasswordEncoder().encode( userDto.password()); //todo move this to service layer
+        this.isActive = true;
+    }
 
 
     @Override

@@ -2,7 +2,7 @@ package br.com.cesarsicas.springstore.web.controller;
 
 import br.com.cesarsicas.springstore.domain.user.AuthData;
 import br.com.cesarsicas.springstore.domain.user.DataTokenJWT;
-import br.com.cesarsicas.springstore.domain.user.User;
+import br.com.cesarsicas.springstore.domain.user.UserEntity;
 import br.com.cesarsicas.springstore.infra.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class AuthController {
         var token = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var authentication = manager.authenticate(token);
 
-        var tokenJWT = tokenService.generateToken((User) authentication.getPrincipal());
+        var tokenJWT = tokenService.generateToken((UserEntity) authentication.getPrincipal());
 
         return ResponseEntity.ok(new DataTokenJWT(tokenJWT));
 
