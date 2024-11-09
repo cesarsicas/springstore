@@ -17,9 +17,11 @@ public record ProductDto(
         BigDecimal value,
 
         @NotNull
-        long category) {
+        long category,
+
+        String imageUrl) {
 
     public ProductDto(Product product) {
-        this(product.name(), product.description(), product.value(), product.category());
+        this(product.name(), product.description(), product.value(), product.category(), product.imageUrl());
     }
 }

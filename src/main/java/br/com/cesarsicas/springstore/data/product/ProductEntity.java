@@ -26,7 +26,7 @@ public class ProductEntity {
     private String name;
     private String description;
     private BigDecimal value;
-
+    private String imageUrl;
 
 
     @ManyToOne

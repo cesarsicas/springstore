@@ -11,18 +11,19 @@ public record Product(
         String name,
         String description,
         BigDecimal value,
-        long category) {
+        long category,
+        String imageUrl) {
 
     public Product(ProductEntity product) {
-        this(product.getId(), product.getName(), product.getDescription(), product.getValue(), product.getCategory().getId());
+        this(product.getId(), product.getName(), product.getDescription(), product.getValue(), product.getCategory().getId(), product.getImageUrl());
     }
 
     public Product(ProductDto productDto) {
-        this(0, productDto.name(), productDto.description(), productDto.value(), productDto.category());
+        this(0, productDto.name(), productDto.description(), productDto.value(), productDto.category(), productDto.imageUrl());
     }
 
     public Product(UpdateProductDto productDto) {
-        this(productDto.id(), productDto.name(), productDto.description(), productDto.value(), productDto.category());
+        this(productDto.id(), productDto.name(), productDto.description(), productDto.value(), productDto.category(), productDto.imageUrl());
     }
 
 }

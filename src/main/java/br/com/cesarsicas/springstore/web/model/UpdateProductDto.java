@@ -17,6 +17,8 @@ public record UpdateProductDto(
 
         BigDecimal value,
 
-        long category) {
+        long category,
+
+        String imageUrl) {
 
 }
