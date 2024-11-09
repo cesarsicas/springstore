@@ -1,6 +1,7 @@
 package br.com.cesarsicas.springstore.data.product_category;
 
 import br.com.cesarsicas.springstore.data.product.ProductEntity;
+import br.com.cesarsicas.springstore.domain.model.ProductCategory;
 import br.com.cesarsicas.springstore.web.model.ProductCategoryDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class ProductCategoryEntity {
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductEntity> products;
 
-    public ProductCategoryEntity(ProductCategoryDto productDto) {
+    public ProductCategoryEntity(ProductCategory productDto) {
         this.name = productDto.name();
         this.description = productDto.description();
     }

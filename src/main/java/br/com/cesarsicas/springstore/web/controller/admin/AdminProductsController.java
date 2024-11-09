@@ -1,11 +1,10 @@
 package br.com.cesarsicas.springstore.web.controller.admin;
 
-import br.com.cesarsicas.springstore.web.model.ProductDto;
-import br.com.cesarsicas.springstore.data.product.ProductEntity;
-import br.com.cesarsicas.springstore.data.product.ProductRepository;
+import br.com.cesarsicas.springstore.domain.model.ProductCategory;
+import br.com.cesarsicas.springstore.domain.service.ProductCategoryService;
+import br.com.cesarsicas.springstore.domain.service.ProductService;
 import br.com.cesarsicas.springstore.web.model.ProductCategoryDto;
-import br.com.cesarsicas.springstore.data.product_category.ProductCategoryEntity;
-import br.com.cesarsicas.springstore.data.product_category.ProductCategoryRepository;
+import br.com.cesarsicas.springstore.web.model.ProductDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -14,42 +13,42 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("admin/products")
 public class AdminProductsController {
 
     @Autowired
-    ProductCategoryRepository productCategoryRepository;
+    ProductCategoryService productCategoryService;
 
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
 
 
     @GetMapping
-    public ResponseEntity list(Pageable pageable) {
-        var products = productRepository.findAll();
-        return ResponseEntity.ok(products.stream().map(ProductDto::new));
+    public ResponseEntity<List<ProductDto>> list(Pageable pageable) {
+        var products = productService.getProducts();
+        return ResponseEntity.ok(products.stream().map(ProductDto::new).toList());
     }
 
     @DeleteMapping("/productId")
     @Transactional
     public ResponseEntity delete(@PathVariable Long id) {
-        ProductEntity productEntity = productRepository.getReferenceById(id);
-        productRepository.delete(productEntity);
+        productService.deleteProduct(id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/categories")
     public ResponseEntity saveCategory(@RequestBody @Valid ProductCategoryDto productDto, UriComponentsBuilder uriBuilder) {
-        System.out.println(productDto);
-        productCategoryRepository.save(new ProductCategoryEntity(productDto));
+        productCategoryService.saveCategory(new ProductCategory(productDto));
         return ResponseEntity.ok().build();
 
     }
 
     @GetMapping("/categories")
-    public ResponseEntity listProductCategories() {
-        return ResponseEntity.ok(productCategoryRepository.findAll().stream().map(ProductCategoryDto::new));
+    public ResponseEntity<List<ProductCategoryDto>> listProductCategories() {
+        return ResponseEntity.ok(productCategoryService.getAllCategories().stream().map(ProductCategoryDto::new).toList());
     }
 
 }

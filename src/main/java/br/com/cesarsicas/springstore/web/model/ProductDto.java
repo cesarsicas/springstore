@@ -1,7 +1,7 @@
 package br.com.cesarsicas.springstore.web.model;
 
 
-import br.com.cesarsicas.springstore.data.product.ProductEntity;
+import br.com.cesarsicas.springstore.domain.model.Product;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -19,7 +19,7 @@ public record ProductDto(
         @NotNull
         long category) {
 
-    public ProductDto(ProductEntity product) {
-        this(product.getName(), product.getDescription(), product.getValue(), product.getCategory().getId());
+    public ProductDto(Product product) {
+        this(product.name(), product.description(), product.value(), product.category());
     }
 }

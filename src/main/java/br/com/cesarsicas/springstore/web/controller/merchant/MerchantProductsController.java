@@ -1,5 +1,8 @@
 package br.com.cesarsicas.springstore.web.controller.merchant;
 
+import br.com.cesarsicas.springstore.domain.model.Product;
+import br.com.cesarsicas.springstore.domain.service.ProductCategoryService;
+import br.com.cesarsicas.springstore.domain.service.ProductService;
 import br.com.cesarsicas.springstore.web.model.ProductDto;
 import br.com.cesarsicas.springstore.data.product.ProductEntity;
 import br.com.cesarsicas.springstore.data.product.ProductRepository;
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -23,15 +27,14 @@ import java.util.Objects;
 public class MerchantProductsController {
 
     @Autowired
-    ProductRepository productRepository;
+    ProductService productService;
 
-    @Autowired
-    ProductCategoryRepository productCategoryRepository;
+
 
     @GetMapping
-    public ResponseEntity list(Pageable pageable, @AuthenticationPrincipal UserEntity user) {
-        var products = productRepository.searchByUser(user.getId());
-        return ResponseEntity.ok(products.stream().map(ProductDto::new));
+    public ResponseEntity<List<ProductDto>> list(Pageable pageable, @AuthenticationPrincipal UserEntity user) {
+        var products = productService.searchByUser(user.getId());
+        return ResponseEntity.ok(products.stream().map(ProductDto::new).toList());
     }
 
     @Transactional
@@ -39,15 +42,13 @@ public class MerchantProductsController {
     public ResponseEntity save(@RequestBody @Valid ProductDto productDto,
                                UriComponentsBuilder uriBuilder,
                                @AuthenticationPrincipal UserEntity user) {
-        System.out.println(productDto);
 
-        var category = productCategoryRepository.findById(productDto.category());
+        Boolean isSuccess = productService.saveProduct(new Product(productDto), user);
 
-        if (category.isPresent()) {
-            productRepository.save(new ProductEntity(productDto, category.get(), user));
+        if (isSuccess) {
             return ResponseEntity.ok().build();
         } else {
-            return ResponseEntity.badRequest().build(); //todo check error code
+            return ResponseEntity.badRequest().build();
         }
     }
 

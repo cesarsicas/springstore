@@ -1,6 +1,7 @@
 package br.com.cesarsicas.springstore.data.product;
 
 
+import br.com.cesarsicas.springstore.domain.model.Product;
 import br.com.cesarsicas.springstore.web.model.ProductDto;
 import br.com.cesarsicas.springstore.web.model.UpdateProductDto;
 import br.com.cesarsicas.springstore.data.product_category.ProductCategoryEntity;
@@ -38,7 +39,7 @@ public class ProductEntity {
     @JoinColumn(name = "category_id")
     private ProductCategoryEntity category;
 
-    public ProductEntity(ProductDto productDto, ProductCategoryEntity category, UserEntity user) {
+    public ProductEntity(Product productDto, ProductCategoryEntity category, UserEntity user) {
         this.name = productDto.name();
         this.description = productDto.description();
         this.value = productDto.value();
