@@ -1,15 +1,12 @@
 package br.com.cesarsicas.springstore.web.controller.merchant;
 
+import br.com.cesarsicas.springstore.data.user.UserEntity;
 import br.com.cesarsicas.springstore.domain.model.Product;
 import br.com.cesarsicas.springstore.domain.service.ProductCategoryService;
 import br.com.cesarsicas.springstore.domain.service.ProductService;
-import br.com.cesarsicas.springstore.web.model.ProductDto;
-import br.com.cesarsicas.springstore.data.product.ProductEntity;
-import br.com.cesarsicas.springstore.data.product.ProductRepository;
-import br.com.cesarsicas.springstore.web.model.UpdateProductDto;
 import br.com.cesarsicas.springstore.web.model.ProductCategoryDto;
-import br.com.cesarsicas.springstore.data.product_category.ProductCategoryRepository;
-import br.com.cesarsicas.springstore.data.user.UserEntity;
+import br.com.cesarsicas.springstore.web.model.ProductDto;
+import br.com.cesarsicas.springstore.web.model.UpdateProductDto;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("merchant/product")
@@ -28,6 +24,9 @@ public class MerchantProductsController {
 
     @Autowired
     ProductService productService;
+
+    @Autowired
+    ProductCategoryService productCategoryService;
 
 
 
@@ -57,36 +56,33 @@ public class MerchantProductsController {
     public ResponseEntity update(@RequestBody @Valid UpdateProductDto updateProductDto,
                                  @AuthenticationPrincipal UserEntity user) {
 
-        ProductEntity productEntity = productRepository.getReferenceById(updateProductDto.id());
+        var isSuccess = productService.updateProduct(new Product(updateProductDto), user);
 
-        if (!Objects.equals(productEntity.getUser().getId(), user.getId())) {
+        if (isSuccess) {
+            return ResponseEntity.ok().build();
+        } else {
             return ResponseEntity.badRequest().build();
         }
-
-        var category = productCategoryRepository.getReferenceById(updateProductDto.category());
-
-        productEntity.atualizar(updateProductDto, category);
-
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/categories")
     public ResponseEntity list() {
-        return ResponseEntity.ok(productCategoryRepository.findAll().stream().map(ProductCategoryDto::new));
+        return ResponseEntity.ok(productCategoryService.getAllCategories().stream().map(ProductCategoryDto::new));
     }
 
     @DeleteMapping("/productId")
     @Transactional
     public ResponseEntity delete(@PathVariable Long id,
                                  @AuthenticationPrincipal UserEntity user) {
-        ProductEntity productEntity = productRepository.getReferenceById(id);
 
-        if (!Objects.equals(productEntity.getUser().getId(), user.getId())) {
+        var isSuccess = productService.deleteProductMerchant(id, user);
+
+        if (isSuccess) {
+            return ResponseEntity.ok().build();
+        } else {
             return ResponseEntity.badRequest().build();
         }
 
-        productRepository.delete(productEntity);
-        return ResponseEntity.ok().build();
     }
 
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ProductService {
@@ -57,5 +58,46 @@ public class ProductService {
             return false;
         }
 
+    }
+
+    public Boolean updateProduct(Product product, UserEntity user) {
+
+        ProductEntity productEntity = repository.getReferenceById(product.id());
+
+        if (!Objects.equals(productEntity.getUser().getId(), user.getId())) {
+            return false;
+        }
+
+        var category = productCategoryRepository.getReferenceById(product.category());
+
+        productEntity.setCategory(category);
+
+        if (product.description()!=null){
+            productEntity.setDescription(product.description());
+        }
+
+        if (product.name()!=null){
+            productEntity.setName(product.name());
+        }
+
+        if (product.value() !=null){
+            productEntity.setValue(product.value());
+        }
+
+        return  true;
+
+    }
+
+    public Boolean deleteProductMerchant(Long id, UserEntity user) {
+
+        ProductEntity productEntity = repository.getReferenceById(id);
+
+        if (!Objects.equals(productEntity.getUser().getId(), user.getId())) {
+            return false;
+        }
+
+       repository.delete(productEntity);
+
+        return  true;
     }
 }

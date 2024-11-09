@@ -15,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class AdminUsersController {
 
     @Autowired
-    UserRepository userRepository;
+    UserRepository userRepository; //todo move to service
 
 
     @GetMapping

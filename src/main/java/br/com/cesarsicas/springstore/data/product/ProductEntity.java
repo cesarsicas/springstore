@@ -7,16 +7,14 @@ import br.com.cesarsicas.springstore.web.model.UpdateProductDto;
 import br.com.cesarsicas.springstore.data.product_category.ProductCategoryEntity;
 import br.com.cesarsicas.springstore.data.user.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Table(name = "products")
 @Entity(name = "Product")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -58,20 +56,4 @@ public class ProductEntity {
                 '}';
     }
 
-    public void atualizar(UpdateProductDto updateProductDto, ProductCategoryEntity category) {
-        this.category = category;
-
-        if (updateProductDto.description()!=null){
-            this.description = updateProductDto.description();
-        }
-
-        if (updateProductDto.name()!=null){
-            this.description = updateProductDto.name();
-        }
-
-        if (updateProductDto.value() !=null){
-            this.value = updateProductDto.value();
-        }
-
-    }
 }
