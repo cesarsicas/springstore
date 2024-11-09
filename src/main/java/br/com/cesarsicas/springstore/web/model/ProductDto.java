@@ -1,6 +1,7 @@
-package br.com.cesarsicas.springstore.domain.product;
+package br.com.cesarsicas.springstore.web.model;
 
 
+import br.com.cesarsicas.springstore.data.product.ProductEntity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

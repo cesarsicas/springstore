@@ -1,14 +1,15 @@
-package br.com.cesarsicas.springstore.domain.product;
+package br.com.cesarsicas.springstore.data.product;
 
 
-import br.com.cesarsicas.springstore.domain.product_category.ProductCategoryEntity;
-import br.com.cesarsicas.springstore.domain.user.UserEntity;
+import br.com.cesarsicas.springstore.web.model.ProductDto;
+import br.com.cesarsicas.springstore.web.model.UpdateProductDto;
+import br.com.cesarsicas.springstore.data.product_category.ProductCategoryEntity;
+import br.com.cesarsicas.springstore.data.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.catalina.User;
 
 import java.math.BigDecimal;
 

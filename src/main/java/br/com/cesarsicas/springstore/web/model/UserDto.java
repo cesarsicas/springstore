@@ -1,4 +1,7 @@
-package br.com.cesarsicas.springstore.domain.user;
+package br.com.cesarsicas.springstore.web.model;
+
+import br.com.cesarsicas.springstore.data.user.UserEntity;
+import br.com.cesarsicas.springstore.domain.user.Role;
 
 public record UserDto(
         Long id,

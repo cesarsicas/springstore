@@ -1,6 +1,5 @@
-package br.com.cesarsicas.springstore.domain.product;
+package br.com.cesarsicas.springstore.data.product;
 
-import br.com.cesarsicas.springstore.domain.product_category.ProductCategoryEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

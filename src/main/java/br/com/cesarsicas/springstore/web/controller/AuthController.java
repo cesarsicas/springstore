@@ -1,9 +1,9 @@
 package br.com.cesarsicas.springstore.web.controller;
 
-import br.com.cesarsicas.springstore.domain.user.AuthData;
-import br.com.cesarsicas.springstore.domain.user.DataTokenJWT;
-import br.com.cesarsicas.springstore.domain.user.UserEntity;
-import br.com.cesarsicas.springstore.infra.TokenService;
+import br.com.cesarsicas.springstore.web.model.AuthData;
+import br.com.cesarsicas.springstore.web.model.DataTokenJWT;
+import br.com.cesarsicas.springstore.data.user.UserEntity;
+import br.com.cesarsicas.springstore.domain.service.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
-package br.com.cesarsicas.springstore.infra;
+package br.com.cesarsicas.springstore.domain.service;
 
-import br.com.cesarsicas.springstore.domain.user.UserRepository;
+import br.com.cesarsicas.springstore.data.user.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

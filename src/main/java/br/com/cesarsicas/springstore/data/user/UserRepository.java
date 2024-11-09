@@ -1,4 +1,4 @@
-package br.com.cesarsicas.springstore.domain.user;
+package br.com.cesarsicas.springstore.data.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;

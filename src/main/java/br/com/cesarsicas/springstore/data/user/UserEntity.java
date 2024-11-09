@@ -1,6 +1,8 @@
-package br.com.cesarsicas.springstore.domain.user;
+package br.com.cesarsicas.springstore.data.user;
 
 
+import br.com.cesarsicas.springstore.domain.user.Role;
+import br.com.cesarsicas.springstore.web.model.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

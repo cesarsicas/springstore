@@ -1,4 +1,4 @@
-package br.com.cesarsicas.springstore.domain.product;
+package br.com.cesarsicas.springstore.web.model;
 
 
 import jakarta.validation.constraints.NotBlank;

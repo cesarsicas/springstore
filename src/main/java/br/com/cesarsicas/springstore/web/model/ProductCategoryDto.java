@@ -1,5 +1,6 @@
-package br.com.cesarsicas.springstore.domain.product_category;
+package br.com.cesarsicas.springstore.web.model;
 
+import br.com.cesarsicas.springstore.data.product_category.ProductCategoryEntity;
 import jakarta.validation.constraints.NotBlank;
 
 public record  ProductCategoryDto(

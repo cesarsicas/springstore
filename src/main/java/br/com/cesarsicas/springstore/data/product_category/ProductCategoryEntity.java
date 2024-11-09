@@ -1,6 +1,7 @@
-package br.com.cesarsicas.springstore.domain.product_category;
+package br.com.cesarsicas.springstore.data.product_category;
 
-import br.com.cesarsicas.springstore.domain.product.ProductEntity;
+import br.com.cesarsicas.springstore.data.product.ProductEntity;
+import br.com.cesarsicas.springstore.web.model.ProductCategoryDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

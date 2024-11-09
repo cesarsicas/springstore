@@ -1,6 +1,6 @@
-package br.com.cesarsicas.springstore.infra;
+package br.com.cesarsicas.springstore.domain.service;
 
-import br.com.cesarsicas.springstore.domain.user.UserEntity;
+import br.com.cesarsicas.springstore.data.user.UserEntity;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;

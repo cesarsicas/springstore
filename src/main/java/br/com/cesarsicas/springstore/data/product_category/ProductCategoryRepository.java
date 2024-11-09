@@ -1,4 +1,4 @@
-package br.com.cesarsicas.springstore.domain.product_category;
+package br.com.cesarsicas.springstore.data.product_category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

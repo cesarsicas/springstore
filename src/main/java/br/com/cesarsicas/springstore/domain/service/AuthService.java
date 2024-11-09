@@ -1,5 +1,6 @@
-package br.com.cesarsicas.springstore.domain.user;
+package br.com.cesarsicas.springstore.domain.service;
 
+import br.com.cesarsicas.springstore.data.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

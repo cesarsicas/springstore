@@ -1,9 +1,9 @@
 package br.com.cesarsicas.springstore.web.controller.customer;
 
-import br.com.cesarsicas.springstore.domain.product.ProductDto;
-import br.com.cesarsicas.springstore.domain.product.ProductRepository;
-import br.com.cesarsicas.springstore.domain.product_category.ProductCategoryDto;
-import br.com.cesarsicas.springstore.domain.product_category.ProductCategoryRepository;
+import br.com.cesarsicas.springstore.web.model.ProductDto;
+import br.com.cesarsicas.springstore.data.product.ProductRepository;
+import br.com.cesarsicas.springstore.web.model.ProductCategoryDto;
+import br.com.cesarsicas.springstore.data.product_category.ProductCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

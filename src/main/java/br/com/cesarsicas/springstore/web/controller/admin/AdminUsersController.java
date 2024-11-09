@@ -1,8 +1,8 @@
 package br.com.cesarsicas.springstore.web.controller.admin;
 
-import br.com.cesarsicas.springstore.domain.user.UserDto;
-import br.com.cesarsicas.springstore.domain.user.UserEntity;
-import br.com.cesarsicas.springstore.domain.user.UserRepository;
+import br.com.cesarsicas.springstore.web.model.UserDto;
+import br.com.cesarsicas.springstore.data.user.UserEntity;
+import br.com.cesarsicas.springstore.data.user.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
