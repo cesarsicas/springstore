@@ -1,6 +1,7 @@
 package br.com.cesarsicas.springstore.data.user;
 
 
+import br.com.cesarsicas.springstore.domain.model.User;
 import br.com.cesarsicas.springstore.domain.user.Role;
 import br.com.cesarsicas.springstore.web.model.UserDto;
 import jakarta.persistence.*;
@@ -33,12 +34,13 @@ public class UserEntity implements UserDetails {
     @Setter
     boolean isActive;
 
-    public UserEntity(UserDto userDto) {
-        this.login = userDto.email();
+    public UserEntity(User userDto) {
+        this.login = userDto.login();
         this.role = userDto.role();
-        this.password = new BCryptPasswordEncoder().encode( userDto.password()); //todo move this to service layer
+        this.password = userDto.password();
         this.isActive = true;
     }
+
 
 
     @Override
