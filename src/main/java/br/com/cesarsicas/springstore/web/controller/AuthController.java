@@ -1,7 +1,7 @@
 package br.com.cesarsicas.springstore.web.controller;
 
-import br.com.cesarsicas.springstore.web.model.AuthData;
-import br.com.cesarsicas.springstore.web.model.DataTokenJWT;
+import br.com.cesarsicas.springstore.web.model.AuthDataDto;
+import br.com.cesarsicas.springstore.web.model.TokenJWTDto;
 import br.com.cesarsicas.springstore.data.user.UserEntity;
 import br.com.cesarsicas.springstore.domain.service.TokenService;
 import jakarta.validation.Valid;
@@ -25,13 +25,13 @@ public class AuthController {
     private TokenService tokenService;
 
     @PostMapping
-    public ResponseEntity login(@RequestBody @Valid AuthData data) {
+    public ResponseEntity login(@RequestBody @Valid AuthDataDto data) {
         var token = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var authentication = manager.authenticate(token);
 
         var tokenJWT = tokenService.generateToken((UserEntity) authentication.getPrincipal());
 
-        return ResponseEntity.ok(new DataTokenJWT(tokenJWT));
+        return ResponseEntity.ok(new TokenJWTDto(tokenJWT));
 
     }
 }

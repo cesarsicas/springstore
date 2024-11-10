@@ -1,4 +1,4 @@
 package br.com.cesarsicas.springstore.web.model;
 
-public record DataTokenJWT(String tokenJWT) {
+public record TokenJWTDto(String tokenJWT) {
 }
