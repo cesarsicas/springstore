@@ -5,6 +5,7 @@ import br.com.cesarsicas.springstore.domain.service.UserService;
 import br.com.cesarsicas.springstore.web.model.UserDto;
 import br.com.cesarsicas.springstore.data.user.UserEntity;
 import br.com.cesarsicas.springstore.data.user.UserRepository;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin/users")
+@SecurityRequirement(name = "bearer-key")
 public class AdminUsersController {
 
     @Autowired

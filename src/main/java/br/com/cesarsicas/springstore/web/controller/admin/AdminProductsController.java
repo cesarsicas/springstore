@@ -5,6 +5,7 @@ import br.com.cesarsicas.springstore.domain.service.ProductCategoryService;
 import br.com.cesarsicas.springstore.domain.service.ProductService;
 import br.com.cesarsicas.springstore.web.model.ProductCategoryDto;
 import br.com.cesarsicas.springstore.web.model.ProductDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("admin/products")
+@SecurityRequirement(name = "bearer-key")
 public class AdminProductsController {
 
     @Autowired
@@ -32,7 +34,7 @@ public class AdminProductsController {
         return ResponseEntity.ok(products.stream().map(ProductDto::new).toList());
     }
 
-    @DeleteMapping("/productId")
+    @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity delete(@PathVariable Long id) {
         productService.deleteProduct(id);

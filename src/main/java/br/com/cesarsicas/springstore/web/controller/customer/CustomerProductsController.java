@@ -4,6 +4,7 @@ import br.com.cesarsicas.springstore.domain.service.ProductCategoryService;
 import br.com.cesarsicas.springstore.domain.service.ProductService;
 import br.com.cesarsicas.springstore.web.model.ProductCategoryDto;
 import br.com.cesarsicas.springstore.web.model.ProductDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("customer/products")
+@SecurityRequirement(name = "bearer-key")
 public class CustomerProductsController {
 
 
@@ -44,10 +46,10 @@ public class CustomerProductsController {
         return ResponseEntity.ok(new ProductDto(productService.getProductById(id)));
     }
 
-    @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<ProductDto>> listByCategory(@PathVariable Long categoryId, Pageable pageable) {
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<ProductDto>> listByCategory(@PathVariable Long id, Pageable pageable) {
 
-        var result = productService.searchByCategoryId(categoryId);
+        var result = productService.searchByCategoryId(id);
 
         return ResponseEntity.ok(result.stream().map(ProductDto::new).toList());
     }

@@ -7,6 +7,7 @@ import br.com.cesarsicas.springstore.domain.service.ProductService;
 import br.com.cesarsicas.springstore.web.model.ProductCategoryDto;
 import br.com.cesarsicas.springstore.web.model.ProductDto;
 import br.com.cesarsicas.springstore.web.model.UpdateProductDto;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 
 @RestController
-@RequestMapping("merchant/product")
+@RequestMapping("merchant/products")
+@SecurityRequirement(name = "bearer-key")
 public class MerchantProductsController {
 
     @Autowired
@@ -70,7 +72,7 @@ public class MerchantProductsController {
         return ResponseEntity.ok(productCategoryService.getAllCategories().stream().map(ProductCategoryDto::new));
     }
 
-    @DeleteMapping("/productId")
+    @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity delete(@PathVariable Long id,
                                  @AuthenticationPrincipal UserEntity user) {
