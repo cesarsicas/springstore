@@ -15,6 +15,7 @@ import java.util.Collection;
 @Table(name = "users")
 @Entity(name = "User")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -34,10 +35,10 @@ public class UserEntity implements UserDetails {
     @Setter
     boolean isActive;
 
-    public UserEntity(User userDto) {
-        this.login = userDto.login();
-        this.role = userDto.role();
-        this.password = userDto.password();
+    public UserEntity(User user) {
+        this.login = user.login();
+        this.role = user.role();
+        this.password = user.password();
         this.isActive = true;
     }
 
