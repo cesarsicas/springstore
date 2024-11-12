@@ -46,8 +46,8 @@ public class CustomerProductsController {
         return ResponseEntity.ok(new ProductDto(productService.getProductById(id)));
     }
 
-    @GetMapping("/category/{id}")
-    public ResponseEntity<List<ProductDto>> listByCategory(@PathVariable Long id, Pageable pageable) {
+    @GetMapping("/categories/{id}")
+    public ResponseEntity<List<ProductDto>> listByCategory(@PathVariable Long id) {
 
         var result = productService.searchByCategoryId(id);
 

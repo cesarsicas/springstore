@@ -41,7 +41,6 @@ public class MerchantProductsController {
     @Transactional
     @PostMapping
     public ResponseEntity save(@RequestBody @Valid ProductDto productDto,
-                               UriComponentsBuilder uriBuilder,
                                @AuthenticationPrincipal UserEntity user) {
 
         Boolean isSuccess = productService.saveProduct(new Product(productDto), user);

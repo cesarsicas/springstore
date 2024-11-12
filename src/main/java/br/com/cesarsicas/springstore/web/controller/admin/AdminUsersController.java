@@ -33,7 +33,7 @@ public class AdminUsersController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity saveUsers(@RequestBody @Valid UserDto userDto, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity saveUsers(@RequestBody @Valid UserDto userDto) {
         userService.saveUser(new User(userDto));
         return ResponseEntity.ok().build();
     }
