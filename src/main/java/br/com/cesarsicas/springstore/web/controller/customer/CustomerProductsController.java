@@ -6,6 +6,7 @@ import br.com.cesarsicas.springstore.web.model.ProductCategoryDto;
 import br.com.cesarsicas.springstore.web.model.ProductDto;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,10 +26,9 @@ public class CustomerProductsController {
     @Autowired
     ProductCategoryService productCategoryService;
 
-
     @GetMapping
     public ResponseEntity<List<ProductDto>> list(Pageable pageable) {
-        var products = productService.getProducts();
+        var products = productService.getProducts(pageable);
         return ResponseEntity.ok(products.stream().map(ProductDto::new).toList());
     }
 

@@ -30,7 +30,7 @@ public class AdminProductsController {
 
     @GetMapping
     public ResponseEntity<List<ProductDto>> list(Pageable pageable) {
-        var products = productService.getProducts();
+        var products = productService.getProducts(pageable);
         return ResponseEntity.ok(products.stream().map(ProductDto::new).toList());
     }
 

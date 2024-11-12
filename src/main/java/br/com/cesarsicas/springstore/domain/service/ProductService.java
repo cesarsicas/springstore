@@ -6,6 +6,7 @@ import br.com.cesarsicas.springstore.data.product_category.ProductCategoryReposi
 import br.com.cesarsicas.springstore.data.user.UserEntity;
 import br.com.cesarsicas.springstore.domain.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public class ProductService {
     ProductCategoryRepository productCategoryRepository;
 
 
-    public List<Product> getProducts() {
-        return repository.findAll().stream().map(Product::new).toList();
+    public List<Product> getProducts(Pageable pageable) {
+        return repository.getAllBy(pageable).stream().map(Product::new).toList();
     }
 
     public List<Product> searchProducts(String s) {
