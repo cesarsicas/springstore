@@ -35,7 +35,7 @@ The application is developed with Spring Boot and Java Language
 
 ## Getting Started
 ### Prerequisites
-- Java 11 or higher
+- Java 17 or higher
 - MySql 
 
 ### Installation
