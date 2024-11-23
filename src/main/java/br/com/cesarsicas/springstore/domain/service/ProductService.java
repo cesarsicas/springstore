@@ -1,5 +1,6 @@
 package br.com.cesarsicas.springstore.domain.service;
 
+import br.com.cesarsicas.springstore.data.merchant.MerchantEntity;
 import br.com.cesarsicas.springstore.data.product.ProductEntity;
 import br.com.cesarsicas.springstore.data.product.ProductRepository;
 import br.com.cesarsicas.springstore.data.product_category.ProductCategoryRepository;
@@ -48,12 +49,12 @@ public class ProductService {
         return repository.searchByUser(id).stream().map(Product::new).toList();
     }
 
-    public Boolean saveProduct(Product product, UserEntity user) {
+    public Boolean saveProduct(Product product, MerchantEntity merchant) {
 
         var category = productCategoryRepository.findById(product.category());
 
         if (category.isPresent()) {
-            repository.save(new ProductEntity(product, category.get(), user));
+            repository.save(new ProductEntity(product, category.get(), merchant));
             return true;
         } else {
             return false;
@@ -65,7 +66,7 @@ public class ProductService {
 
         ProductEntity productEntity = repository.getReferenceById(product.id());
 
-        if (!Objects.equals(productEntity.getUser().getId(), user.getId())) {
+        if (!Objects.equals(productEntity.getMerchant().getId(), user.getId())) {
             return false;
         }
 
@@ -93,7 +94,7 @@ public class ProductService {
 
         ProductEntity productEntity = repository.getReferenceById(id);
 
-        if (!Objects.equals(productEntity.getUser().getId(), user.getId())) {
+        if (!Objects.equals(productEntity.getMerchant().getId(), user.getId())) {
             return false;
         }
 
