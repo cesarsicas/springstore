@@ -6,6 +6,7 @@ import br.com.cesarsicas.springstore.domain.product.dto.UpdateProductDto;
 
 import java.math.BigDecimal;
 
+@Deprecated(since = "use dto now")
 public record Product(
         long id,
         String name,

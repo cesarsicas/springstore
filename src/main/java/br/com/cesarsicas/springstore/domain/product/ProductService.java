@@ -48,8 +48,8 @@ public class ProductService {
 
     }
 
-    public List<Product> searchByUser(Long id) {
-        return repository.searchByUser(id).stream().map(Product::new).toList();
+    public List<Product> searchByMerchant(Long id) {
+        return repository.searchByMerchant(id).stream().map(Product::new).toList();
     }
 
     public void saveProduct(Product product, UserEntity user) throws Exception {

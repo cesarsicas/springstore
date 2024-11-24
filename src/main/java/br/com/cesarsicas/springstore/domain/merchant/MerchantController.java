@@ -1,12 +1,14 @@
 package br.com.cesarsicas.springstore.domain.merchant;
 
-import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
+import br.com.cesarsicas.springstore.domain.merchant.dto.CreateMerchantDto;
+import br.com.cesarsicas.springstore.domain.merchant.dto.UpdateMerchantDto;
 import br.com.cesarsicas.springstore.domain.product.Product;
-import br.com.cesarsicas.springstore.domain.product_category.ProductCategoryService;
 import br.com.cesarsicas.springstore.domain.product.ProductService;
-import br.com.cesarsicas.springstore.domain.product_category.ProductCategoryDto;
 import br.com.cesarsicas.springstore.domain.product.dto.ProductDto;
 import br.com.cesarsicas.springstore.domain.product.dto.UpdateProductDto;
+import br.com.cesarsicas.springstore.domain.product_category.ProductCategoryDto;
+import br.com.cesarsicas.springstore.domain.product_category.ProductCategoryService;
+import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("merchant/products")
+@RequestMapping("merchant")
 @SecurityRequirement(name = "bearer-key")
-public class MerchantProductsController {
+public class MerchantController {
 
     @Autowired
     ProductService productService;
@@ -29,16 +31,28 @@ public class MerchantProductsController {
     @Autowired
     ProductCategoryService productCategoryService;
 
+    @Autowired
+    MerchantService merchantService;
 
+    @PostMapping
+    ResponseEntity save(@RequestBody CreateMerchantDto merchantDto, @AuthenticationPrincipal UserEntity user) {
+        merchantService.saveMerchant(merchantDto, user);
+        return ResponseEntity.ok().build();
+    }
+    @PutMapping
+    ResponseEntity update(@RequestBody UpdateMerchantDto updateCustomerDto, @AuthenticationPrincipal UserEntity user) {
+        merchantService.updateMerchant(updateCustomerDto, user);
+        return ResponseEntity.ok().build();
+    }
 
-    @GetMapping
+    @GetMapping("/products")
     public ResponseEntity<List<ProductDto>> list(Pageable pageable, @AuthenticationPrincipal UserEntity user) {
-        var products = productService.searchByUser(user.getId());
+        var products = productService.searchByMerchant(user.getId());
         return ResponseEntity.ok(products.stream().map(ProductDto::new).toList());
     }
 
     @Transactional
-    @PostMapping
+    @PostMapping("/products")
     public ResponseEntity save(@RequestBody @Valid ProductDto productDto,
                                @AuthenticationPrincipal UserEntity user) {
 
@@ -52,7 +66,7 @@ public class MerchantProductsController {
     }
 
     @Transactional
-    @PutMapping
+    @PutMapping("/products")
     public ResponseEntity update(@RequestBody @Valid UpdateProductDto updateProductDto,
                                  @AuthenticationPrincipal UserEntity user) {
 
@@ -65,12 +79,12 @@ public class MerchantProductsController {
         }
     }
 
-    @GetMapping("/categories")
+    @GetMapping("/products/categories")
     public ResponseEntity list() {
         return ResponseEntity.ok(productCategoryService.getAllCategories().stream().map(ProductCategoryDto::new));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/products/{id}")
     @Transactional
     public ResponseEntity delete(@PathVariable Long id,
                                  @AuthenticationPrincipal UserEntity user) {
@@ -82,7 +96,5 @@ public class MerchantProductsController {
         } else {
             return ResponseEntity.badRequest().build();
         }
-
     }
-
 }
