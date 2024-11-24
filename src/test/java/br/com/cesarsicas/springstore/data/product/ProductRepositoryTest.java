@@ -1,5 +1,6 @@
 package br.com.cesarsicas.springstore.data.product;
 
+import br.com.cesarsicas.springstore.data.merchant.MerchantEntity;
 import br.com.cesarsicas.springstore.data.product_category.ProductCategoryEntity;
 import br.com.cesarsicas.springstore.data.user.UserEntity;
 import br.com.cesarsicas.springstore.domain.model.Product;
@@ -8,6 +9,7 @@ import br.com.cesarsicas.springstore.domain.model.User;
 import br.com.cesarsicas.springstore.domain.user.Role;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -30,6 +32,9 @@ class ProductRepositoryTest {
     @Autowired
     ProductRepository productRepository;
 
+    @Mock
+    MerchantEntity merchant;
+
 
     @Test
     @DisplayName("Assert that filter by category is working correctly")
@@ -45,9 +50,9 @@ class ProductRepositoryTest {
         em.persist(category3);
 
 
-        ProductEntity p1 = new ProductEntity(new Product(0l, "Product 1", "Product ", BigDecimal.TEN, category1.getId(), ""), category1, user);
-        ProductEntity p2 = new ProductEntity(new Product(0l, "Product 2 ", "Product ", BigDecimal.TEN, category2.getId(), ""), category2, user);
-        ProductEntity p3 = new ProductEntity(new Product(0l, "Product 3 ", "Product ", BigDecimal.TEN, category2.getId(), ""), category2, user);
+        ProductEntity p1 = new ProductEntity(new Product(0l, "Product 1", "Product ", BigDecimal.TEN, category1.getId(), ""), category1, merchant);
+        ProductEntity p2 = new ProductEntity(new Product(0l, "Product 2 ", "Product ", BigDecimal.TEN, category2.getId(), ""), category2, merchant);
+        ProductEntity p3 = new ProductEntity(new Product(0l, "Product 3 ", "Product ", BigDecimal.TEN, category2.getId(), ""), category2, merchant);
         em.persist(p1);
         em.persist(p2);
 

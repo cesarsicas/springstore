@@ -57,7 +57,6 @@ class MerchantProductsControllerTest {
     @DisplayName("Should return 200 because everything is correct")
     void save_200() throws Exception {
 
-        when(productService.saveProduct(any(), any())).thenReturn(true);
 
         UserEntity userEntity = new UserEntity(new User(1l, "teste@teste.com.br", "123", Role.MERCHANT, true));
 

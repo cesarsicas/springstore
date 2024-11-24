@@ -1,6 +1,7 @@
 package br.com.cesarsicas.springstore.domain.service;
 
 import br.com.cesarsicas.springstore.data.merchant.MerchantEntity;
+import br.com.cesarsicas.springstore.data.merchant.MerchantRepository;
 import br.com.cesarsicas.springstore.data.product.ProductEntity;
 import br.com.cesarsicas.springstore.data.product.ProductRepository;
 import br.com.cesarsicas.springstore.data.product_category.ProductCategoryRepository;
@@ -21,6 +22,10 @@ public class ProductService {
 
     @Autowired
     ProductCategoryRepository productCategoryRepository;
+
+
+    @Autowired
+    MerchantRepository merchantRepository;
 
 
     public List<Product> getProducts(Pageable pageable) {
@@ -49,16 +54,17 @@ public class ProductService {
         return repository.searchByUser(id).stream().map(Product::new).toList();
     }
 
-    public Boolean saveProduct(Product product, MerchantEntity merchant) {
+    public void saveProduct(Product product, UserEntity user) throws Exception {
 
         var category = productCategoryRepository.findById(product.category());
+        var merchant = merchantRepository.findByUser(user);
 
-        if (category.isPresent()) {
-            repository.save(new ProductEntity(product, category.get(), merchant));
-            return true;
-        } else {
-            return false;
+
+        if (category.isEmpty() || merchant==null) {
+            throw new Exception("It wasn't possible to save the product. Verify the category or merchant");
         }
+
+        repository.save(new ProductEntity(product, category.get(), merchant));
 
     }
 
