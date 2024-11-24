@@ -1,4 +1,4 @@
-package br.com.cesarsicas.springstore.domain.user.auth;
+package br.com.cesarsicas.springstore.domain.user_auth;
 
 import jakarta.validation.constraints.NotEmpty;
 

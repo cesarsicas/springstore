@@ -1,4 +1,4 @@
-package br.com.cesarsicas.springstore.domain.user.auth;
+package br.com.cesarsicas.springstore.domain.user_auth;
 
 import br.com.cesarsicas.springstore.domain.user.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

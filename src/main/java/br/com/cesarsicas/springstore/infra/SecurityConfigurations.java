@@ -1,6 +1,5 @@
 package br.com.cesarsicas.springstore.infra;
 
-import br.com.cesarsicas.springstore.domain.user.auth.SecurityFilter;
 import br.com.cesarsicas.springstore.domain.user.Role;
 import br.com.cesarsicas.springstore.domain.user.RolePermissions;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,7 @@
-package br.com.cesarsicas.springstore.domain.user.auth;
+package br.com.cesarsicas.springstore.infra;
 
 import br.com.cesarsicas.springstore.domain.user.data.UserRepository;
+import br.com.cesarsicas.springstore.domain.user_auth.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

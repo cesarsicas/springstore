@@ -1,4 +1,4 @@
-package br.com.cesarsicas.springstore.domain.user.auth;
+package br.com.cesarsicas.springstore.domain.user_auth;
 
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import com.auth0.jwt.JWT;
