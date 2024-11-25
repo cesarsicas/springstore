@@ -1,10 +1,10 @@
 package br.com.cesarsicas.springstore.web.controller.merchant;
 
-import br.com.cesarsicas.springstore.data.user.UserEntity;
-import br.com.cesarsicas.springstore.domain.model.User;
-import br.com.cesarsicas.springstore.domain.service.ProductService;
+import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
+import br.com.cesarsicas.springstore.domain.user.User;
+import br.com.cesarsicas.springstore.domain.product.ProductService;
 import br.com.cesarsicas.springstore.domain.user.Role;
-import br.com.cesarsicas.springstore.web.model.ProductDto;
+import br.com.cesarsicas.springstore.domain.product.dto.ProductDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,6 @@ import java.math.BigDecimal;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 

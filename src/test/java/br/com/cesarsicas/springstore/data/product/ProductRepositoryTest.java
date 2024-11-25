@@ -1,11 +1,13 @@
 package br.com.cesarsicas.springstore.data.product;
 
-import br.com.cesarsicas.springstore.data.merchant.MerchantEntity;
-import br.com.cesarsicas.springstore.data.product_category.ProductCategoryEntity;
-import br.com.cesarsicas.springstore.data.user.UserEntity;
-import br.com.cesarsicas.springstore.domain.model.Product;
-import br.com.cesarsicas.springstore.domain.model.ProductCategory;
-import br.com.cesarsicas.springstore.domain.model.User;
+import br.com.cesarsicas.springstore.domain.merchant.MerchantEntity;
+import br.com.cesarsicas.springstore.domain.product.data.product_category.ProductCategoryEntity;
+import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
+import br.com.cesarsicas.springstore.domain.product.Product;
+import br.com.cesarsicas.springstore.domain.product_category.ProductCategory;
+import br.com.cesarsicas.springstore.domain.user.User;
+import br.com.cesarsicas.springstore.domain.product.data.product.ProductEntity;
+import br.com.cesarsicas.springstore.domain.product.data.product.ProductRepository;
 import br.com.cesarsicas.springstore.domain.user.Role;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

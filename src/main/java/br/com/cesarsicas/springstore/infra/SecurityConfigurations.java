@@ -1,6 +1,5 @@
 package br.com.cesarsicas.springstore.infra;
 
-import br.com.cesarsicas.springstore.domain.service.SecurityFilter;
 import br.com.cesarsicas.springstore.domain.user.Role;
 import br.com.cesarsicas.springstore.domain.user.RolePermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class SecurityConfigurations {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize ->
                         authorize
-                                .requestMatchers(HttpMethod.POST, "/login").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                                 .requestMatchers( "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
 
 
