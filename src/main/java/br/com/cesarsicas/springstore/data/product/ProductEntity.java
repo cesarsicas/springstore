@@ -1,11 +1,9 @@
 package br.com.cesarsicas.springstore.data.product;
 
 
-import br.com.cesarsicas.springstore.domain.model.Product;
-import br.com.cesarsicas.springstore.web.model.ProductDto;
-import br.com.cesarsicas.springstore.web.model.UpdateProductDto;
+import br.com.cesarsicas.springstore.data.merchant.MerchantEntity;
 import br.com.cesarsicas.springstore.data.product_category.ProductCategoryEntity;
-import br.com.cesarsicas.springstore.data.user.UserEntity;
+import br.com.cesarsicas.springstore.domain.model.Product;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -27,33 +25,29 @@ public class ProductEntity {
     private String description;
     private BigDecimal value;
     private String imageUrl;
+    private int quantity;
 
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @JoinColumn(name = "merchant_id")
+    private MerchantEntity merchant;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private ProductCategoryEntity category;
 
-    public ProductEntity(Product productDto, ProductCategoryEntity category, UserEntity user) {
+    public ProductEntity(Product productDto, ProductCategoryEntity category, MerchantEntity merchant) {
         this.name = productDto.name();
         this.description = productDto.description();
         this.value = productDto.value();
         this.category = category;
-        this.user = user;
+        this.merchant = merchant;
     }
 
 
     @Override
     public String toString() {
-        return "ProductEntity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", value=" + value +
-                '}';
+        return "ProductEntity{" + "id=" + id + ", name='" + name + '\'' + ", description='" + description + '\'' + ", value=" + value + '}';
     }
 
 }

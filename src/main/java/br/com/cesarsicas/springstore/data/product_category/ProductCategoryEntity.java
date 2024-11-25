@@ -24,6 +24,7 @@ public class ProductCategoryEntity {
     private Long id;
     private String name;
     private String description;
+    private String imageUrl;
 
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductEntity> products;

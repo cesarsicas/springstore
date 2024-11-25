@@ -43,11 +43,11 @@ public class MerchantProductsController {
     public ResponseEntity save(@RequestBody @Valid ProductDto productDto,
                                @AuthenticationPrincipal UserEntity user) {
 
-        Boolean isSuccess = productService.saveProduct(new Product(productDto), user);
-
-        if (isSuccess) {
+        try{
+            productService.saveProduct(new Product(productDto), user);
             return ResponseEntity.ok().build();
-        } else {
+        }
+        catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
     }
