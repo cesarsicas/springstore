@@ -1,4 +1,4 @@
-package br.com.cesarsicas.springstore.domain.customer_address;
+package br.com.cesarsicas.springstore.domain.customer.customer_address;
 
 import br.com.cesarsicas.springstore.domain.customer.CustomerEntity;
 import br.com.cesarsicas.springstore.domain.customer.dto.CreateCustomerAddressDto;

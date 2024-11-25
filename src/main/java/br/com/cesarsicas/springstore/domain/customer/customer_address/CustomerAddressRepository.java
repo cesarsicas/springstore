@@ -1,6 +1,5 @@
-package br.com.cesarsicas.springstore.domain.customer_address;
+package br.com.cesarsicas.springstore.domain.customer.customer_address;
 
-import br.com.cesarsicas.springstore.domain.product.data.product.ProductEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

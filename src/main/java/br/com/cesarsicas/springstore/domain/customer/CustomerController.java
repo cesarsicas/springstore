@@ -31,6 +31,11 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping
+    ResponseEntity<GetCustomerDto> getCustomer(@AuthenticationPrincipal UserEntity user) {
+        return ResponseEntity.ok(customerService.getCustomer(user));
+    }
+
     @PutMapping
     ResponseEntity updateCustomer(@RequestBody UpdateCustomerDto updateCustomerDto, @AuthenticationPrincipal UserEntity user) {
         customerService.updateCustomer(updateCustomerDto, user);
@@ -54,6 +59,12 @@ public class CustomerController {
     @GetMapping("/address")
     ResponseEntity<List<GetCustomerAddressDto>> getCustomerAddress(@RequestBody UpdateCustomerAddressDto updateCustomerAddressDto, @AuthenticationPrincipal UserEntity user) {
         return ResponseEntity.ok(customerService.getCustomerAddresses(user));
+    }
+
+    @DeleteMapping("/address/{addressId}")
+    ResponseEntity deleteCustomerAddress(@PathVariable Long addressId, @AuthenticationPrincipal UserEntity user) {
+        customerService.deleteCustomerAddress(addressId, user);
+        return ResponseEntity.ok().build();
     }
 
 

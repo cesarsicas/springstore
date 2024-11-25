@@ -1,8 +1,8 @@
 package br.com.cesarsicas.springstore.domain.customer;
 
 import br.com.cesarsicas.springstore.domain.customer.dto.*;
-import br.com.cesarsicas.springstore.domain.customer_address.CustomerAddressEntity;
-import br.com.cesarsicas.springstore.domain.customer_address.CustomerAddressRepository;
+import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressEntity;
+import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressRepository;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +32,10 @@ public class CustomerService {
         customer.update(customerDto);
     }
 
+    public GetCustomerDto getCustomer(UserEntity user) {
+        return new GetCustomerDto(repository.findByUser(user));
+    }
+
     public void saveCustomerAddress(CreateCustomerAddressDto createCustomerAddressDto, UserEntity user) {
         //todo validate user
         CustomerEntity customer = repository.findByUser(user);
@@ -49,4 +53,12 @@ public class CustomerService {
     public List<GetCustomerAddressDto> getCustomerAddresses(UserEntity user) {
         return customerAddressRepository.searchAddressesByUserId(user.getId()).stream().map(GetCustomerAddressDto::new).toList();
     }
+
+    public void deleteCustomerAddress(Long addressId, UserEntity user) {
+        //todo validate user
+        var address = customerAddressRepository.getReferenceById(addressId);
+        customerAddressRepository.delete(address);
+
+    }
+
 }

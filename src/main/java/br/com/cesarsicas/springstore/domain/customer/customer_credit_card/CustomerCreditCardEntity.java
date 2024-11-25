@@ -1,4 +1,4 @@
-package br.com.cesarsicas.springstore.domain.customer_credit_card;
+package br.com.cesarsicas.springstore.domain.customer.customer_credit_card;
 
 import br.com.cesarsicas.springstore.domain.customer.CustomerEntity;
 import jakarta.persistence.*;

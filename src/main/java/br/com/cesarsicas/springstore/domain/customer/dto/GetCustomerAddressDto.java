@@ -1,6 +1,6 @@
 package br.com.cesarsicas.springstore.domain.customer.dto;
 
-import br.com.cesarsicas.springstore.domain.customer_address.CustomerAddressEntity;
+import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressEntity;
 
 public record GetCustomerAddressDto(
         Long id,
