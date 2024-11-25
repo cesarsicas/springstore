@@ -34,9 +34,8 @@ public class CustomerEntity {
         this.user = user;
     }
 
-    public CustomerEntity(UpdateCustomerDto customerDto, UserEntity user) {
+    public void update(UpdateCustomerDto customerDto) {
         this.name = customerDto.name();
         this.document = customerDto.document();
-        this.user = user;
     }
 }
