@@ -1,4 +1,4 @@
-package br.com.cesarsicas.springstore.domain.cart_product;
+package br.com.cesarsicas.springstore.domain.cart.cart_product;
 
 import br.com.cesarsicas.springstore.domain.cart.CartEntity;
 import br.com.cesarsicas.springstore.domain.product.data.product.ProductEntity;

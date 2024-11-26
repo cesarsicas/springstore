@@ -1,5 +1,6 @@
 package br.com.cesarsicas.springstore.domain.user_auth;
 
+import br.com.cesarsicas.springstore.domain.product.ProductService;
 import br.com.cesarsicas.springstore.domain.user.User;
 import br.com.cesarsicas.springstore.domain.user.UserService;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
@@ -13,10 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")

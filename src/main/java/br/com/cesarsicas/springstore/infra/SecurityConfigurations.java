@@ -30,6 +30,8 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize ->
                         authorize
                                 .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+
                                 .requestMatchers( "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
 
 
@@ -38,6 +40,12 @@ public class SecurityConfigurations {
                                 .requestMatchers(HttpMethod.GET, "/customer/**").hasAnyAuthority(RolePermissions.CUSTOMER_READ.name())
                                 .requestMatchers(HttpMethod.PUT, "/customer/**").hasAnyAuthority(RolePermissions.CUSTOMER_UPDATE.name())
                                 .requestMatchers(HttpMethod.DELETE, "/customer/**").hasAnyAuthority(RolePermissions.CUSTOMER_DELETE.name())
+
+                                .requestMatchers("/cart/**").hasAnyRole(Role.CUSTOMER.name())
+                                .requestMatchers(HttpMethod.POST, "/cart/**").hasAnyAuthority(RolePermissions.CUSTOMER_CREATE.name())
+                                .requestMatchers(HttpMethod.GET, "/cart/**").hasAnyAuthority(RolePermissions.CUSTOMER_READ.name())
+                                .requestMatchers(HttpMethod.PUT, "/cart/**").hasAnyAuthority(RolePermissions.CUSTOMER_UPDATE.name())
+                                .requestMatchers(HttpMethod.DELETE, "/cart/**").hasAnyAuthority(RolePermissions.CUSTOMER_DELETE.name())
 
 
                                 .requestMatchers("/merchant/**").hasAnyRole(Role.MERCHANT.name())
