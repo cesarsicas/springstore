@@ -48,6 +48,11 @@ public class SecurityConfigurations {
                                 .requestMatchers(HttpMethod.DELETE, "/cart/**").hasAnyAuthority(RolePermissions.CUSTOMER_DELETE.name())
 
 
+                                .requestMatchers("/order/**").hasAnyRole(Role.CUSTOMER.name())
+                                .requestMatchers(HttpMethod.POST, "/cart/**").hasAnyAuthority(RolePermissions.CUSTOMER_CREATE.name())
+                                .requestMatchers(HttpMethod.GET, "/cart/**").hasAnyAuthority(RolePermissions.CUSTOMER_READ.name())
+
+
                                 .requestMatchers("/merchant/**").hasAnyRole(Role.MERCHANT.name())
                                 .requestMatchers(HttpMethod.POST, "/merchant/**").hasAnyAuthority(RolePermissions.MERCHANT_CREATE.name())
                                 .requestMatchers(HttpMethod.GET, "/merchant/**").hasAnyAuthority(RolePermissions.MERCHANT_READ.name())

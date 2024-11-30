@@ -1,5 +1,6 @@
 package br.com.cesarsicas.springstore.domain.order_product;
 
+import br.com.cesarsicas.springstore.domain.cart.cart_product.CartProductEntity;
 import br.com.cesarsicas.springstore.domain.order.OrderEntity;
 import br.com.cesarsicas.springstore.domain.product.data.product.ProductEntity;
 import jakarta.persistence.*;
@@ -35,4 +36,11 @@ public class OrderProductEntity {
     @ManyToOne
     @JoinColumn(name = "order_id", referencedColumnName = "id")
     private OrderEntity order;
+
+    public OrderProductEntity(CartProductEntity cartProductEntity, OrderEntity order) {
+        this.product = cartProductEntity.getProduct();
+        this.productQuantity = cartProductEntity.getQuantity();
+        this.productValue = cartProductEntity.getProduct().getValue();
+        this.order = order;
+    }
 }

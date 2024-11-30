@@ -1,6 +1,11 @@
 package br.com.cesarsicas.springstore.domain.order;
 
 import br.com.cesarsicas.springstore.domain.customer.CustomerEntity;
+import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressEntity;
+import br.com.cesarsicas.springstore.domain.customer.customer_credit_card.CustomerCreditCardEntity;
+import br.com.cesarsicas.springstore.domain.order.dto.CreateOrder;
+import br.com.cesarsicas.springstore.domain.order.dto.CreateOrderDto;
+import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -29,4 +34,25 @@ public class OrderEntity {
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
     private CustomerEntity customer;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_address_id", referencedColumnName = "id")
+    private CustomerAddressEntity address;
+
+
+    @ManyToOne
+    @JoinColumn(name = "customer_credit_card_id", referencedColumnName = "id")
+    private CustomerCreditCardEntity creditCard;
+
+
+    public OrderEntity(CreateOrder createOrder,
+                       CustomerEntity customer,
+                       CustomerCreditCardEntity customerCreditCardEntity,
+                       CustomerAddressEntity customerAddressEntity) {
+        this.totalAmount = createOrder.totalAmount();
+        this.datetime = createOrder.datetime();
+        this.customer = customer;
+        this.address = customerAddressEntity;
+        this.creditCard = customerCreditCardEntity;
+    }
 }
