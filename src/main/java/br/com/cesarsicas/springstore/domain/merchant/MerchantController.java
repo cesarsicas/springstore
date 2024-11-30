@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("merchant")
+@RequestMapping("/merchant")
 @SecurityRequirement(name = "bearer-key")
 public class MerchantController {
 

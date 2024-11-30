@@ -1,6 +1,7 @@
 package br.com.cesarsicas.springstore.domain.cart.cart_product;
 
 import br.com.cesarsicas.springstore.domain.cart.CartEntity;
+import br.com.cesarsicas.springstore.domain.product.Product;
 import br.com.cesarsicas.springstore.domain.product.data.product.ProductEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,5 +32,13 @@ public class CartProductEntity {
     @ManyToOne
     @JoinColumn(name = "cart_id", referencedColumnName = "id")
     private CartEntity cart;
+
+    private int quantity;
+
+    public CartProductEntity(ProductEntity product, CartEntity cart, int quantity ) {
+        this.cart = cart;
+        this.product = product;
+        this.quantity = quantity;
+    }
 }
 

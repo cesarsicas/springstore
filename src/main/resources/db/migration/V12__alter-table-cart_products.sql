@@ -1,0 +1,1 @@
+alter table cart_products add quantity int;
