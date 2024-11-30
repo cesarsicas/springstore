@@ -66,4 +66,24 @@ public class CustomerController {
         return ResponseEntity.ok().build();
     }
 
+
+
+    @PostMapping("/credit-card")
+    ResponseEntity saveCustomerCreditCard(@RequestBody CreateCustomerCreditCardDto createCustomerCreditCardDto, @AuthenticationPrincipal UserEntity user) {
+        customerService.saveCreditCard(createCustomerCreditCardDto, user);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @GetMapping("/credit-card")
+    ResponseEntity<List<GetCreditCardDto>> getCustomerCreditCardList(@AuthenticationPrincipal UserEntity user) {
+        return ResponseEntity.ok(customerService.getCreditCardList(user));
+    }
+
+    @DeleteMapping("/credit-card/{creditCardId}")
+    ResponseEntity deleteCustomerCreditCard(@PathVariable Long creditCardId, @AuthenticationPrincipal UserEntity user) {
+        customerService.deleteCreditCard(creditCardId, user);
+        return ResponseEntity.ok().build();
+    }
+
 }

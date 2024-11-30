@@ -46,5 +46,12 @@ public class CartController {
 
     }
 
+    @PostMapping("/finish")
+    ResponseEntity cartFinish(@RequestBody AddUpdateCartProductsDto addCartProducts, @AuthenticationPrincipal UserEntity user) {
+        cartService.addCartProducts(addCartProducts, user);
+        return ResponseEntity.ok().build();
+
+    }
+
 
 }

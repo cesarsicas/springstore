@@ -1,5 +1,7 @@
 package br.com.cesarsicas.springstore.domain.customer;
 
+import br.com.cesarsicas.springstore.domain.customer.customer_credit_card.CustomerCreditCardEntity;
+import br.com.cesarsicas.springstore.domain.customer.customer_credit_card.CustomerCreditCardRepository;
 import br.com.cesarsicas.springstore.domain.customer.dto.*;
 import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressEntity;
 import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressRepository;
@@ -18,6 +20,10 @@ public class CustomerService {
 
     @Autowired
     private CustomerAddressRepository customerAddressRepository;
+
+
+    @Autowired
+    private CustomerCreditCardRepository customerCreditCardRepository;
 
 
     void saveCustomer(CreateCustomerDto customerDto, UserEntity user) {
@@ -58,6 +64,25 @@ public class CustomerService {
         //todo validate user
         var address = customerAddressRepository.getReferenceById(addressId);
         customerAddressRepository.delete(address);
+
+    }
+
+
+    public void saveCreditCard(CreateCustomerCreditCardDto createCustomerCreditCardDto, UserEntity user) {
+        //todo validate creditcard data
+        CustomerEntity customer = repository.findByUser(user);
+        customerCreditCardRepository.save(new CustomerCreditCardEntity(createCustomerCreditCardDto, customer));
+    }
+
+
+    public List<GetCreditCardDto> getCreditCardList(UserEntity user) {
+        return customerCreditCardRepository.searchCreditCardsByUser(user.getId()).stream().map(GetCreditCardDto::new).toList();
+    }
+
+    public void deleteCreditCard(Long creditCardId, UserEntity user) {
+        //todo validate user
+        var address = customerCreditCardRepository.getReferenceById(creditCardId);
+        customerCreditCardRepository.delete(address);
 
     }
 
