@@ -1,7 +1,9 @@
 package br.com.cesarsicas.springstore.domain.merchant;
 
+import br.com.cesarsicas.springstore.domain.exceptions.PermissionException;
 import br.com.cesarsicas.springstore.domain.merchant.dto.CreateMerchantDto;
 import br.com.cesarsicas.springstore.domain.merchant.dto.UpdateMerchantDto;
+import br.com.cesarsicas.springstore.domain.user.Role;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,14 +15,15 @@ public class MerchantService {
     @Autowired
     MerchantRepository repository;
 
-    public void saveMerchant(CreateMerchantDto merchantDto, UserEntity user) {
-        //todo validate user and document
+    public void saveMerchant(CreateMerchantDto merchantDto, UserEntity user) throws PermissionException {
+        if(user.getRole() != Role.MERCHANT){
+            throw new PermissionException();
+        }
         repository.save(new MerchantEntity(merchantDto, user));
     }
 
     @Transactional
     public void updateMerchant(UpdateMerchantDto updateCustomerDto, UserEntity user) {
-        //todo validate user and document
 
         var merchant = repository.findByUser(user);
 

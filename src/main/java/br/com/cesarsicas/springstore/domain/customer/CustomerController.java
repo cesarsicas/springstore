@@ -1,17 +1,12 @@
 package br.com.cesarsicas.springstore.domain.customer;
 
-import br.com.cesarsicas.springstore.domain.cart.CartService;
-import br.com.cesarsicas.springstore.domain.cart.dto.GetCartDto;
 import br.com.cesarsicas.springstore.domain.customer.dto.*;
-import br.com.cesarsicas.springstore.domain.product.ProductService;
-import br.com.cesarsicas.springstore.domain.product.dto.ProductDto;
+import br.com.cesarsicas.springstore.domain.exceptions.PermissionException;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,7 +20,7 @@ public class CustomerController {
     CustomerService customerService;
 
     @PostMapping
-    ResponseEntity saveCustomer(@RequestBody CreateCustomerDto customerDto, @AuthenticationPrincipal UserEntity user) {
+    ResponseEntity saveCustomer(@RequestBody CreateCustomerDto customerDto, @AuthenticationPrincipal UserEntity user) throws PermissionException {
         customerService.saveCustomer(customerDto, user);
         return ResponseEntity.ok().build();
     }

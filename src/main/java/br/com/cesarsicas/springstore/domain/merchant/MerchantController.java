@@ -1,5 +1,6 @@
 package br.com.cesarsicas.springstore.domain.merchant;
 
+import br.com.cesarsicas.springstore.domain.exceptions.PermissionException;
 import br.com.cesarsicas.springstore.domain.merchant.dto.CreateMerchantDto;
 import br.com.cesarsicas.springstore.domain.merchant.dto.UpdateMerchantDto;
 import br.com.cesarsicas.springstore.domain.product.Product;
@@ -35,7 +36,7 @@ public class MerchantController {
     MerchantService merchantService;
 
     @PostMapping
-    ResponseEntity save(@RequestBody CreateMerchantDto merchantDto, @AuthenticationPrincipal UserEntity user) {
+    ResponseEntity save(@RequestBody CreateMerchantDto merchantDto, @AuthenticationPrincipal UserEntity user) throws PermissionException {
         merchantService.saveMerchant(merchantDto, user);
         return ResponseEntity.ok().build();
     }

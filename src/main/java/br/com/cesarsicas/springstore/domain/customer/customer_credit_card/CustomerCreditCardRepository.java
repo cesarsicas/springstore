@@ -7,9 +7,17 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository public interface CustomerCreditCardRepository extends JpaRepository<CustomerCreditCardEntity, Long>{
+@Repository
+public interface CustomerCreditCardRepository extends JpaRepository<CustomerCreditCardEntity, Long> {
     @Query("SELECT cc FROM CustomerCreditCardEntity cc " +
             "JOIN cc.customer c " +
             "WHERE c.user.id = :userId")
     List<CustomerCreditCardEntity> searchCreditCardsByUser(@Param("userId") Long userId);
+
+    @Query("SELECT cc FROM CustomerCreditCardEntity cc " +
+            "JOIN cc.customer c " +
+            "WHERE c.user.id = :userId AND cc.id = :creditCardId")
+    CustomerCreditCardEntity searchCreditCardsByCreditCardIdAndUserId(@Param("creditCardId") Long creditCardId, @Param("userId") Long userId);
+
+
 }

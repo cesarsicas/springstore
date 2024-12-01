@@ -5,6 +5,8 @@ import br.com.cesarsicas.springstore.domain.customer.customer_credit_card.Custom
 import br.com.cesarsicas.springstore.domain.customer.dto.*;
 import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressEntity;
 import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressRepository;
+import br.com.cesarsicas.springstore.domain.exceptions.PermissionException;
+import br.com.cesarsicas.springstore.domain.user.Role;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,14 +28,15 @@ public class CustomerService {
     private CustomerCreditCardRepository customerCreditCardRepository;
 
 
-    void saveCustomer(CreateCustomerDto customerDto, UserEntity user) {
-        //todo validate document user and role
+    void saveCustomer(CreateCustomerDto customerDto, UserEntity user) throws PermissionException {
+        if(user.getRole() != Role.CUSTOMER){
+            throw new PermissionException();
+        }
         repository.save(new CustomerEntity(customerDto, user));
     }
 
     @Transactional
     void updateCustomer(UpdateCustomerDto customerDto, UserEntity user) {
-        //todo validate document user and role
         var customer = repository.findByUser(user);
         customer.update(customerDto);
     }
@@ -43,15 +46,13 @@ public class CustomerService {
     }
 
     public void saveCustomerAddress(CreateCustomerAddressDto createCustomerAddressDto, UserEntity user) {
-        //todo validate user
         CustomerEntity customer = repository.findByUser(user);
         customerAddressRepository.save(new CustomerAddressEntity(createCustomerAddressDto, customer));
     }
 
     @Transactional
     public void updateCustomerAddress(UpdateCustomerAddressDto updateCustomerAddressDto, UserEntity user) {
-        //todo validate user
-        var address = customerAddressRepository.getReferenceById(updateCustomerAddressDto.id());
+        var address = customerAddressRepository.searchAddressesByAddressIdAndUserId(updateCustomerAddressDto.id(), user.getId());
         address.update(updateCustomerAddressDto);
 
     }
@@ -61,8 +62,7 @@ public class CustomerService {
     }
 
     public void deleteCustomerAddress(Long addressId, UserEntity user) {
-        //todo validate user
-        var address = customerAddressRepository.getReferenceById(addressId);
+        var address = customerAddressRepository.searchAddressesByAddressIdAndUserId(addressId, user.getId());
         customerAddressRepository.delete(address);
 
     }
@@ -80,8 +80,7 @@ public class CustomerService {
     }
 
     public void deleteCreditCard(Long creditCardId, UserEntity user) {
-        //todo validate user
-        var address = customerCreditCardRepository.getReferenceById(creditCardId);
+        var address = customerCreditCardRepository.searchCreditCardsByCreditCardIdAndUserId(creditCardId, user.getId());
         customerCreditCardRepository.delete(address);
 
     }

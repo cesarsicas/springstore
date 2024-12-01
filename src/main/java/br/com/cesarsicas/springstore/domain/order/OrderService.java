@@ -49,10 +49,16 @@ public class OrderService {
 
     @Transactional
     void createOrder(CreateOrderDto createOrderDto, UserEntity user){
+        var cart = cartRepository.getByUserId(user.getId());
+
+        BigDecimal total = cart.getCartProducts().stream() .map(
+                p -> p.getProduct().getValue())
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
         var createOrder = new CreateOrder(
                 createOrderDto.addressId(),
                 createOrderDto.creditCardId(),
-                BigDecimal.ZERO, //todo calculate total
+                total,
                 LocalDateTime.now(ZoneId.of("GMT-03:00"))
         );
 
@@ -61,7 +67,7 @@ public class OrderService {
         //validate owners
         var address = customerAddressRepository.getReferenceById(createOrder.addressId());
         var creditCard = customerCreditCardRepository.getReferenceById(createOrder.creditCardId());
-        var cart = cartRepository.getByUserId(user.getId());
+
 
 
        var order = orderRepository.save(new OrderEntity(
@@ -78,6 +84,8 @@ public class OrderService {
         cartProductRepository.deleteByCartId(cart.getId());
 
         //todo trigger email
+        //update inventory
+        //check if product has the quantity
 
     }
 }

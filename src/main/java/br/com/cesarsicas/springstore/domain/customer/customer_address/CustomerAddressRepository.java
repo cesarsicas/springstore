@@ -14,4 +14,9 @@ public interface CustomerAddressRepository extends JpaRepository<CustomerAddress
             "WHERE c.user.id = :userId")
     List<CustomerAddressEntity> searchAddressesByUserId(@Param("userId") Long userId);
 
+    @Query("SELECT ca FROM CustomerAddressEntity ca " +
+            "JOIN ca.customer c " +
+            "WHERE c.user.id = :userId AND ca.id = :addressId ")
+    CustomerAddressEntity searchAddressesByAddressIdAndUserId(@Param("addressId") Long addressId, @Param("userId") Long userId);
+
 }

@@ -1,5 +1,6 @@
 package br.com.cesarsicas.springstore.domain.customer.dto;
 
+import br.com.cesarsicas.springstore.domain.StringUtils;
 import br.com.cesarsicas.springstore.domain.customer.customer_credit_card.CustomerCreditCardEntity;
 
 public record GetCreditCardDto(
@@ -10,7 +11,7 @@ public record GetCreditCardDto(
 
     public GetCreditCardDto(CustomerCreditCardEntity customerCreditCardEntity) {
         this(customerCreditCardEntity.getId(),
-                customerCreditCardEntity.getCardNumber(), //todo mask
+                StringUtils.maskCreditCard(customerCreditCardEntity.getCardNumber()),
                 customerCreditCardEntity.getBrand(),
                 customerCreditCardEntity.getExpDate());
     }
