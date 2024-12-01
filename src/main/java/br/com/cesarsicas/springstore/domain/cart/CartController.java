@@ -3,6 +3,7 @@ package br.com.cesarsicas.springstore.domain.cart;
 import br.com.cesarsicas.springstore.domain.cart.dto.DeleteCartProductsDto;
 import br.com.cesarsicas.springstore.domain.cart.dto.GetCartDto;
 import br.com.cesarsicas.springstore.domain.cart.dto.AddUpdateCartProductsDto;
+import br.com.cesarsicas.springstore.domain.exceptions.QuantityException;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class CartController {
     }
 
     @PostMapping("/products")
-    ResponseEntity addCartProducts(@RequestBody AddUpdateCartProductsDto addCartProducts, @AuthenticationPrincipal UserEntity user) {
+    ResponseEntity addCartProducts(@RequestBody AddUpdateCartProductsDto addCartProducts, @AuthenticationPrincipal UserEntity user) throws QuantityException {
         cartService.addCartProducts(addCartProducts, user);
         return ResponseEntity.ok().build();
 
@@ -47,7 +48,7 @@ public class CartController {
     }
 
     @PostMapping("/finish")
-    ResponseEntity cartFinish(@RequestBody AddUpdateCartProductsDto addCartProducts, @AuthenticationPrincipal UserEntity user) {
+    ResponseEntity cartFinish(@RequestBody AddUpdateCartProductsDto addCartProducts, @AuthenticationPrincipal UserEntity user) throws QuantityException {
         cartService.addCartProducts(addCartProducts, user);
         return ResponseEntity.ok().build();
 
