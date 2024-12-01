@@ -11,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
 
 @Service
 public class CartService {
@@ -39,14 +42,32 @@ public class CartService {
             var productToAdd = addUpdateCartProductsDto.products().get(i);
             var product = productRepository.getReferenceById(productToAdd.productId());
 
-            if (productToAdd.quantity() > product.getQuantity()){
+            if (productToAdd.quantity() > product.getQuantity()) {
                 throw new QuantityException();
+            }
+
+            var wasUpdated = updateProductQuantity(cart.getCartProducts(), productToAdd.productId(), productToAdd.quantity());
+
+            if (wasUpdated) {
+                continue;
             }
 
             CartProductEntity cartProductEntity = new CartProductEntity(product, cart, productToAdd.quantity());
             cart.getCartProducts().add(cartProductEntity);
             cartProductRepository.save(cartProductEntity);
         }
+    }
+
+    private Boolean updateProductQuantity(List<CartProductEntity> cartProducts, Long productId, int quantity) {
+        AtomicInteger counter = new AtomicInteger(0);
+        cartProducts.forEach(p -> {
+            if (p.getProduct().getId() == productId) {
+                p.setQuantity(quantity);
+                counter.getAndIncrement();
+            }
+        });
+
+        return counter.get() > 0;
     }
 
     @Transactional
@@ -56,11 +77,7 @@ public class CartService {
         for (int i = 0; i < addUpdateCartProductsDto.products().size(); i++) {
             var productToAdd = addUpdateCartProductsDto.products().get(i);
 
-            cart.getCartProducts().forEach(p -> {
-                if (p.getProduct().getId() == productToAdd.productId()) {
-                    p.setQuantity(productToAdd.quantity());
-                }
-            });
+            updateProductQuantity(cart.getCartProducts(), productToAdd.productId(), productToAdd.quantity());
 
         }
 
