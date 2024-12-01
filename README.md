@@ -66,3 +66,12 @@ The application is developed with Spring Boot and Java Language
 2. Create a schema with the name **springstore_db**
 3. Setup the Mysql connection on **application.properties** file
 
+## ERD
+
+![erd_diagram](https://github.com/user-attachments/assets/608ab45c-4e7c-4213-9ca1-67bf24eee976)
+
+## Swagger
+
+![swagger](https://github.com/user-attachments/assets/36772be4-816b-4fea-a1e0-feba2232f32e)
+
+
