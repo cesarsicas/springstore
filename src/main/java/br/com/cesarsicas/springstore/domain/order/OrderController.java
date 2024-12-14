@@ -1,5 +1,6 @@
 package br.com.cesarsicas.springstore.domain.order;
 
+import br.com.cesarsicas.springstore.domain.exceptions.PaymentAuthorizationDenied;
 import br.com.cesarsicas.springstore.domain.order.dto.CreateOrderDto;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class OrderController {
     OrderService orderService;
 
     @PostMapping
-    ResponseEntity createOrder(@RequestBody CreateOrderDto createOrderDto, @AuthenticationPrincipal UserEntity user) {
+    ResponseEntity createOrder(@RequestBody CreateOrderDto createOrderDto, @AuthenticationPrincipal UserEntity user) throws PaymentAuthorizationDenied {
         orderService.createOrder(createOrderDto, user);
         return ResponseEntity.ok().build();
     }

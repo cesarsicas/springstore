@@ -3,10 +3,10 @@ package br.com.cesarsicas.springstore.domain.order;
 import br.com.cesarsicas.springstore.domain.cart.CartRepository;
 import br.com.cesarsicas.springstore.domain.cart.cart_product.CartProductRepository;
 import br.com.cesarsicas.springstore.domain.customer.CustomerRepository;
-import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressEntity;
 import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressRepository;
-import br.com.cesarsicas.springstore.domain.customer.customer_credit_card.CustomerCreditCardEntity;
 import br.com.cesarsicas.springstore.domain.customer.customer_credit_card.CustomerCreditCardRepository;
+import br.com.cesarsicas.springstore.domain.exceptions.PaymentAuthorizationDenied;
+import br.com.cesarsicas.springstore.domain.order.dto.AuthorizePaymentDto;
 import br.com.cesarsicas.springstore.domain.order.dto.CreateOrder;
 import br.com.cesarsicas.springstore.domain.order.dto.CreateOrderDto;
 import br.com.cesarsicas.springstore.domain.order_product.OrderProductEntity;
@@ -45,14 +45,16 @@ public class OrderService {
     private CartProductRepository cartProductRepository;
 
 
+    @Autowired
+    private PaymentAuthorizationApiClient paymentAuthorizationApiClient;
 
 
     @Transactional
-    void createOrder(CreateOrderDto createOrderDto, UserEntity user){
+    void createOrder(CreateOrderDto createOrderDto, UserEntity user) throws PaymentAuthorizationDenied {
         var cart = cartRepository.getByUserId(user.getId());
 
-        BigDecimal total = cart.getCartProducts().stream() .map(
-                p -> p.getProduct().getValue())
+        BigDecimal total = cart.getCartProducts().stream().map(
+                        p -> p.getProduct().getValue())
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         var createOrder = new CreateOrder(
@@ -68,24 +70,36 @@ public class OrderService {
         var address = customerAddressRepository.getReferenceById(createOrder.addressId());
         var creditCard = customerCreditCardRepository.getReferenceById(createOrder.creditCardId());
 
-
-
-       var order = orderRepository.save(new OrderEntity(
-                createOrder,
-                customer,
-                creditCard,
-                address
+        //todo add cvv and card owner to CreditCard entiy
+        var authorizationResult = paymentAuthorizationApiClient.authorizePayment(new AuthorizePaymentDto(
+                creditCard.getCardNumber(),
+                "123",
+                creditCard.getBrand(),
+                creditCard.getExpDate(),
+                "CardOwner"
         ));
 
-        var orderProducts = cart.getCartProducts().stream().map(cp-> new OrderProductEntity(cp, order)).toList();
 
-        orderProductRepository.saveAll(orderProducts);
+        if (authorizationResult) {
+            var order = orderRepository.save(new OrderEntity(
+                    createOrder,
+                    customer,
+                    creditCard,
+                    address
+            ));
 
-        cartProductRepository.deleteByCartId(cart.getId());
+            var orderProducts = cart.getCartProducts().stream().map(cp -> new OrderProductEntity(cp, order)).toList();
+
+            orderProductRepository.saveAll(orderProducts);
+
+            cartProductRepository.deleteByCartId(cart.getId());
+
+        } else {
+            throw new PaymentAuthorizationDenied();
+        }
 
         //todo trigger email
         //update inventory
-        //check if product has the quantity
 
     }
 }
