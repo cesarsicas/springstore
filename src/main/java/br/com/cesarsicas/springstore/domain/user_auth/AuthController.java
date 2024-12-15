@@ -1,10 +1,8 @@
 package br.com.cesarsicas.springstore.domain.user_auth;
 
-import br.com.cesarsicas.springstore.domain.product.ProductService;
 import br.com.cesarsicas.springstore.domain.user.User;
 import br.com.cesarsicas.springstore.domain.user.UserService;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
-import br.com.cesarsicas.springstore.domain.user.dto.UserDto;
 import br.com.cesarsicas.springstore.domain.user_auth.dto.LoginDto;
 import br.com.cesarsicas.springstore.domain.user_auth.dto.RegisterDto;
 import br.com.cesarsicas.springstore.domain.user_auth.dto.TokenJWTDto;
@@ -14,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
@@ -47,5 +48,4 @@ public class AuthController {
         userService.saveUser(new User(registerDto));
         return ResponseEntity.ok().build();
     }
-
 }
