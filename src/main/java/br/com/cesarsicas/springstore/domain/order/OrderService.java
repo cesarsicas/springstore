@@ -9,6 +9,7 @@ import br.com.cesarsicas.springstore.domain.exceptions.PaymentAuthorizationDenie
 import br.com.cesarsicas.springstore.domain.order.dto.AuthorizePaymentDto;
 import br.com.cesarsicas.springstore.domain.order.dto.CreateOrder;
 import br.com.cesarsicas.springstore.domain.order.dto.CreateOrderDto;
+import br.com.cesarsicas.springstore.domain.order.dto.CustomerEmail;
 import br.com.cesarsicas.springstore.domain.order_product.OrderProductEntity;
 import br.com.cesarsicas.springstore.domain.order_product.OrderProductRepository;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
@@ -47,6 +48,9 @@ public class OrderService {
 
     @Autowired
     private PaymentAuthorizationApiClient paymentAuthorizationApiClient;
+
+    @Autowired
+    private SendRabbitMQMessageService sendRabbitMQMessageService;
 
 
     @Transactional
@@ -92,7 +96,10 @@ public class OrderService {
 
             orderProductRepository.saveAll(orderProducts);
 
-            cartProductRepository.deleteByCartId(cart.getId());
+            //cartProductRepository.deleteByCartId(cart.getId());
+
+            sendRabbitMQMessageService.sendCustomerEmail(
+                    new CustomerEmail("test@test.com.br", "Title", "message"));
 
         } else {
             throw new PaymentAuthorizationDenied();
@@ -102,4 +109,6 @@ public class OrderService {
         //update inventory
 
     }
+
+
 }
