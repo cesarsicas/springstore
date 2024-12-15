@@ -4,13 +4,8 @@ import br.com.cesarsicas.springstore.domain.customer.CustomerEntity;
 import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressEntity;
 import br.com.cesarsicas.springstore.domain.customer.customer_credit_card.CustomerCreditCardEntity;
 import br.com.cesarsicas.springstore.domain.order.dto.CreateOrder;
-import br.com.cesarsicas.springstore.domain.order.dto.CreateOrderDto;
-import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -20,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@Getter
 @ToString
 public class OrderEntity {
 
