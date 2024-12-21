@@ -63,14 +63,14 @@ The application is developed with Spring Boot and Java Language
 - MySql 
 
 
-### Projectss
+### Projects
 1. https://github.com/cesarsicas/springstore-payment-service
 2. https://github.com/cesarsicas/springstore-email-service
 3. https://github.com/cesarsicas/springstore-service-discovery
 
 
 ### Installation
-
+  Check docker-composer.yml file in the root
 
 ## ERD
 
