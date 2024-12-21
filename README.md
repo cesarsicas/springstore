@@ -72,6 +72,10 @@ The application is developed with Spring Boot and Java Language
 ### Installation
   Check docker-composer.yml file in the root
 
+## Project Structure and Services
+![entidades_database_springstore-Página-2 drawio](https://github.com/user-attachments/assets/fd88888a-ba0e-4ea3-ad41-335097f9478f)
+
+
 ## ERD
 
 ![erd_diagram](https://github.com/user-attachments/assets/608ab45c-4e7c-4213-9ca1-67bf24eee976)
