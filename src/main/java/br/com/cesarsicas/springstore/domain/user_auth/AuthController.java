@@ -7,6 +7,7 @@ import br.com.cesarsicas.springstore.domain.user_auth.dto.LoginDto;
 import br.com.cesarsicas.springstore.domain.user_auth.dto.RegisterDto;
 import br.com.cesarsicas.springstore.domain.user_auth.dto.TokenJWTDto;
 import jakarta.validation.Valid;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +31,6 @@ public class AuthController {
     @Autowired
     UserService userService;
 
-
     @PostMapping("/login")
     public ResponseEntity<TokenJWTDto> login(@RequestBody @Valid LoginDto data) {
         var token = new UsernamePasswordAuthenticationToken(data.login(), data.password());
@@ -46,6 +46,11 @@ public class AuthController {
     @Transactional
     public ResponseEntity register(@RequestBody @Valid RegisterDto registerDto) {
         userService.saveUser(new User(registerDto));
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/test")
+    public ResponseEntity test(){
         return ResponseEntity.ok().build();
     }
 }

@@ -1,7 +1,9 @@
 package br.com.cesarsicas.springstore.domain.order;
 
+import br.com.cesarsicas.springstore.domain.StringUtils;
 import br.com.cesarsicas.springstore.domain.cart.CartRepository;
 import br.com.cesarsicas.springstore.domain.cart.cart_product.CartProductRepository;
+import br.com.cesarsicas.springstore.domain.customer.CustomerEntity;
 import br.com.cesarsicas.springstore.domain.customer.CustomerRepository;
 import br.com.cesarsicas.springstore.domain.customer.customer_address.CustomerAddressRepository;
 import br.com.cesarsicas.springstore.domain.customer.customer_credit_card.CustomerCreditCardRepository;
@@ -9,6 +11,7 @@ import br.com.cesarsicas.springstore.domain.exceptions.PaymentAuthorizationDenie
 import br.com.cesarsicas.springstore.domain.order.dto.AuthorizePaymentDto;
 import br.com.cesarsicas.springstore.domain.order.dto.CreateOrder;
 import br.com.cesarsicas.springstore.domain.order.dto.CreateOrderDto;
+import br.com.cesarsicas.springstore.domain.order.dto.CustomerEmail;
 import br.com.cesarsicas.springstore.domain.order_product.OrderProductEntity;
 import br.com.cesarsicas.springstore.domain.order_product.OrderProductRepository;
 import br.com.cesarsicas.springstore.domain.user.data.UserEntity;
@@ -19,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @Service
 public class OrderService {
@@ -47,6 +51,9 @@ public class OrderService {
 
     @Autowired
     private PaymentAuthorizationApiClient paymentAuthorizationApiClient;
+
+    @Autowired
+    private SendRabbitMQMessageService sendRabbitMQMessageService;
 
 
     @Transactional
@@ -92,7 +99,10 @@ public class OrderService {
 
             orderProductRepository.saveAll(orderProducts);
 
-            cartProductRepository.deleteByCartId(cart.getId());
+            //cartProductRepository.deleteByCartId(cart.getId());
+
+            sendRabbitMQMessageService.sendCustomerEmail(
+                    formatMessage(user, customer, order, orderProducts));
 
         } else {
             throw new PaymentAuthorizationDenied();
@@ -102,4 +112,35 @@ public class OrderService {
         //update inventory
 
     }
+
+    CustomerEmail formatMessage(
+            UserEntity user,
+            CustomerEntity customer,
+            OrderEntity orderEntity,
+            List<OrderProductEntity> orderProducts) {
+        StringBuilder builder = new StringBuilder();
+
+
+        builder.append("Hello " + customer.getName() + "\n");
+
+        builder.append("Your order was approved with success.\n");
+
+
+        builder.append("Credit card: " + StringUtils.maskCreditCard(orderEntity.getCreditCard().getCardNumber() + "\n"));
+        builder.append("Address: " + orderEntity.getAddress().toString() + "\n");
+
+        builder.append("Products: \n");
+
+        orderProducts.forEach(p ->
+                builder.append(p.getProduct().getName() + " | " + p.getProduct().getValue() + "\n")
+        );
+
+        builder.append("\nTotal: " + orderEntity.getTotalAmount() + "\n");
+
+        return new CustomerEmail(user.getLogin(), "Order Approved", builder.toString());
+
+
+    }
+
+
 }

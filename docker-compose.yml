@@ -1,0 +1,118 @@
+version: '3.8'
+
+services:
+  #Default Rabbit MQ
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - helpdesk
+
+  ################
+  #Service Discovery
+  #https://github.com/cesarsicas/springstore-service-discovery
+  service-discovery:
+    image: cesarsicas/springstore-service-discovery:0.0.1
+    container_name: service_discovery
+    ports:
+      - "8761:8761"
+    networks:
+      - helpdesk
+
+  ################
+  #Payment Service
+  #https://github.com/cesarsicas/springstore-payment-service
+  payment-service:
+    image: cesarsicas/springstore-payment-service:0.0.1
+    environment:
+      - springstore_database_payment_url=jdbc:mysql://mysql_payments/springstore_payments
+      - springstore_database_user=root
+      - springstore_database_password=root
+      - eureka_uri=http://service-discovery:8761/eureka
+    networks:
+      - helpdesk
+    depends_on:
+      - mysql_payments
+
+
+  ################
+  #Springstore Main project
+  #https://github.com/cesarsicas
+  springstore:
+    image: cesarsicas/springstore:0.0.1
+    ports:
+      - "8080:8080"
+    environment:
+      - springstore_database_url=jdbc:mysql://mysql_springstore/springstore_v2
+      - springstore_database_user=root
+      - springstore_database_password=root
+      - eureka_uri=http://service-discovery:8761/eureka
+      - rabbitmq_host=rabbitmq      
+      - rabbitmq_addresses=rabbitmq
+      - rabbitmq_username=guest
+      - rabbitmq_password=guest
+      - rabbitmq_port=5672      
+    networks:
+      - helpdesk
+    depends_on:
+      - mysql_springstore
+      - rabbitmq      
+
+  ################
+  #Email Service
+  #https://github.com/cesarsicas/springstore-email-service
+  email-service:
+    image: cesarsicas/springstore-email-service:0.0.1
+
+    environment:
+      - service_email_username=YOUR_EMAIL_AT_GMAIL  #EDIT HERE
+      - service_email_password=YOUR_EMAIL_PASSWORD #EDIT HERE
+      - rabbitmq_host=rabbitmq      
+      - rabbitmq_addresses=rabbitmq
+      - rabbitmq_username=guest
+      - rabbitmq_password=guest
+      - rabbitmq_port=5672      
+    networks:
+      - helpdesk
+    depends_on:
+      - rabbitmq  
+
+  ################
+  #Default Mysql
+  mysql_springstore:
+    image: mysql:8.0
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_DATABASE=springstore_v2
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - mysql_springstore_data:/var/lib/mysql
+    networks:
+      - helpdesk
+
+
+  ################
+  #Default Mysql
+  mysql_payments:
+    image: mysql:8.0
+    ports:
+      - "3307:3306"
+    environment:
+      - MYSQL_DATABASE=springstore_payments
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - mysql_payments_data:/var/lib/mysql
+    networks:
+      - helpdesk
+
+networks:
+  helpdesk:
+    driver: bridge
+
+volumes:
+  mysql_springstore_data:
+  mysql_payments_data:

@@ -61,4 +61,16 @@ public class CustomerAddressEntity {
         this.uf = updateCustomerAddressDto.uf();
         this.cep = updateCustomerAddressDto.cep();
     }
+
+    @Override
+    public String toString() {
+        return
+                ", street='" + street + '\'' +
+                        ", number='" + number + '\'' +
+                        ", complement='" + complement + '\'' +
+                        ", city='" + city + '\'' +
+                        ", state='" + state + '\'' +
+                        ", uf='" + uf + '\'' +
+                        ", cep='" + cep + '\'';
+    }
 }
