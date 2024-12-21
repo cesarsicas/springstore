@@ -13,6 +13,12 @@ The application is developed with Spring Boot and Java Language
 - **Lombok**: To reduce boilerplate code.
 - **Auth0-JWT**: To generate standard JWT tokens
 - **Spring Doc**: For generating swagger documentation
+- **Spring Eureka Server**: For Service discovering
+- **Spring Server Client**: To comunnicate with the server and client load balance
+- **RabbitMQ**: To communicate and enqueue emails 
+- **Gmail**: Used as SMTP to send emails
+
+
 
 ## Features
 
@@ -50,21 +56,21 @@ The application is developed with Spring Boot and Java Language
   - After each order, all products from the customer cart are removed 
 
     
-
-## //Todo
-- Email to the client and merchant after Orders creation
-- Live chat
-
-
+  
 ## Getting Started
 ### Prerequisites
 - Java 17 or higher
 - MySql 
 
+
+### Projectss
+1. https://github.com/cesarsicas/springstore-payment-service
+2. https://github.com/cesarsicas/springstore-email-service
+3. https://github.com/cesarsicas/springstore-service-discovery
+
+
 ### Installation
-1. Clone the repository
-2. Create a schema with the name **springstore_db**
-3. Setup the Mysql connection on **application.properties** file
+
 
 ## ERD
 
